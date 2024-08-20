@@ -6,6 +6,10 @@
 # dotenv files
 .env
 
+Lines.db
+TextFilesFolder
+GeneralFile.txt
+
 # User-specific files
 *.rsuser
 *.suo
