@@ -51,7 +51,7 @@ public class ImportToDatabaseService
                         db.Lines.AddRange(batch);
                         db.SaveChanges();
                     }
-
+                    Console.WriteLine($"{db.Lines.Find(50)} lines");
                     Console.WriteLine($"Импортирование строк из файла {fileName} в базу данных завершено. Всего импортировано: {lineCount} строк.");
                 }
             }
