@@ -1,63 +1,72 @@
-namespace Task1;
-
-using Task1.Data;
-using Task1.Models;
-
-public class ImportToDatabaseService
+namespace Task1
 {
-    public static void ImportToDatabase(string[] fileNames)
+    using Task1.Data;
+    using Task1.Models;
+
+    public class ImportToDatabaseService
     {
-        try
+        // Метод для импорта данных из файлов в базу данных
+        // Параметры:
+        // - fileNames: массив имен файлов, из которых будет производиться импорт данных
+        public static void ImportToDatabase(string[] fileNames)
         {
-            foreach (var fileName in fileNames)
+            try
             {
-                Console.WriteLine($"Импортируем строки из файла {fileName} в базу данных...");
-
-                using (var db = new LineDbContext())
-                using (var reader = new StreamReader(fileName))
+                // Цикл по каждому файлу в списке fileNames
+                foreach (var fileName in fileNames)
                 {
-                    int lineCount = 0;
-                    List<Line> batch = new List<Line>();
+                    Console.WriteLine($"Импортируем строки из файла {fileName} в базу данных...");
 
-                    string line;
-                    while ((line = reader.ReadLine()) != null)
+                    // Создание контекста базы данных и StreamReader для чтения файла
+                    using (var db = new LineDbContext())
+                    using (var reader = new StreamReader(fileName))
                     {
-                        var properties = line.Split("||");
-                        var dbLine = new Line
+                        int lineCount = 0; // Счетчик строк
+                        List<Line> batch = new List<Line>(); // Пакет для хранения строк перед вставкой в базу данных
+
+                        string line;
+                        // Чтение файла построчно
+                        while ((line = reader.ReadLine()) != null)
                         {
-                            Date = DateTime.Parse(properties[0]),
-                            LatinLetters = properties[1],
-                            RussianLetters = properties[2],
-                            IntNumber = Int32.Parse(properties[3]),
-                            DoubleNumber = Double.Parse(properties[4])
-                        };
+                            // Разделение строки на свойства
+                            var properties = line.Split("||");
+                            var dbLine = new Line
+                            {
+                                Date = DateTime.Parse(properties[0]),          // Парсинг даты
+                                LatinLetters = properties[1],                  // Латинские буквы
+                                RussianLetters = properties[2],                // Русские буквы
+                                IntNumber = Int32.Parse(properties[3]),        // Целое число
+                                DoubleNumber = Double.Parse(properties[4])     // Число с плавающей точкой
+                            };
 
-                        batch.Add(dbLine);
-                        lineCount++;
+                            batch.Add(dbLine); // Добавление строки в пакет
+                            lineCount++;
 
-                        // Пакетное сохранение каждые 1000 строк
-                        if (lineCount % 1000 == 0)
+                            // Пакетное сохранение каждые 1000 строк
+                            if (lineCount % 1000 == 0)
+                            {
+                                db.Lines.AddRange(batch);  // Добавление строк в базу данных
+                                db.SaveChanges();          // Сохранение изменений
+                                batch.Clear();             // Очистка пакета
+                                Console.WriteLine($"Импортировано: {lineCount} строк");
+                            }
+                        }
+
+                        // Сохранение оставшихся строк, если они есть
+                        if (batch.Count > 0)
                         {
                             db.Lines.AddRange(batch);
                             db.SaveChanges();
-                            batch.Clear();
-                            Console.WriteLine($"Импортировано: {lineCount} строк");
                         }
+                        Console.WriteLine($"Импортирование строк из файла {fileName} в базу данных завершено. Всего импортировано: {lineCount} строк.");
                     }
-
-                    // Сохранение оставшихся строк
-                    if (batch.Count > 0)
-                    {
-                        db.Lines.AddRange(batch);
-                        db.SaveChanges();
-                    }
-                    Console.WriteLine($"Импортирование строк из файла {fileName} в базу данных завершено. Всего импортировано: {lineCount} строк.");
                 }
             }
-        }
-        catch (System.Exception ex)
-        {
-            Console.WriteLine(ex.Message);
+            catch (System.Exception ex)
+            {
+                // Обработка исключений и вывод сообщения об ошибке
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
