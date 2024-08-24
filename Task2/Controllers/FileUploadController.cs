@@ -72,6 +72,7 @@ namespace Task2.Controllers
                         }
                         var accountData = new Account
                         {
+                            Id = Guid.NewGuid().ToString(),
                             AccountNumber = worksheet.Cells[row, 1].Value?.ToString(),
                             Class = className,
                             IncomingBalanceActive = Convert.ToDecimal(worksheet.Cells[row, 3].Value),
@@ -96,7 +97,7 @@ namespace Task2.Controllers
                 }
 
                 // Перенаправление на главную страницу после успешной загрузки
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             catch (Exception ex)
             {

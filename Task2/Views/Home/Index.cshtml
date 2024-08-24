@@ -35,7 +35,7 @@ else
 <hr />
 
 <h2>Загрузить новый файл</h2>
-<form asp-action="UploadFile" method="post" enctype="multipart/form-data">
+<form asp-controller="FileUpload" asp-action="UploadFile" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label for="file">Выберите файл .xlsx</label>
         <input type="file" class="form-control" name="file" id="file" />

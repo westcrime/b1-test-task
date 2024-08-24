@@ -6,6 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class Account
 {
     [Key]
+    [Column(TypeName = "VARCHAR(100)")]
+    public string Id { get; set; }
     [Column(TypeName = "VARCHAR(10)")]
     public string AccountNumber { get; set; }
 

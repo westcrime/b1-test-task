@@ -4,8 +4,9 @@ CREATE TABLE UploadedFiles (
     UploadDate DATETIME
 );
 
-CREATE TABLE AccountData (
-    AccountNumber VARCHAR(10) PRIMARY KEY,
+CREATE TABLE Accounts (
+    Id VARCHAR(100) PRIMARY KEY,
+    AccountNumber VARCHAR(10),
     Class VARCHAR(20),
     IncomingBalanceActive DECIMAL(18, 2),
     IncomingBalancePassive DECIMAL(18, 2),
