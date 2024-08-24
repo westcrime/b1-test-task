@@ -1,5 +1,5 @@
 # Использованные библиотеки
-EfCore 8 \n
+EfCore 8 \
 ASP.NET Core 8
 # Task1
 ## Genering 100 files
