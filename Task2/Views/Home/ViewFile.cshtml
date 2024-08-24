@@ -1,0 +1,39 @@
+@model IEnumerable<Task2.Models.Account>
+
+@{
+    ViewData["Title"] = "View File";
+}
+
+<h2>Accounts Data</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Account Number</th>
+            <th>Class</th>
+            <th>Incoming Balance Active</th>
+            <th>Incoming Balance Passive</th>
+            <th>Turnover Debit</th>
+            <th>Turnover Credit</th>
+            <th>Outgoing Balance Active</th>
+            <th>Outgoing Balance Passive</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var account in Model)
+        {
+            <tr>
+                <td>@account.AccountNumber</td>
+                <td>@account.Class</td>
+                <td>@account.IncomingBalanceActive</td>
+                <td>@account.IncomingBalancePassive</td>
+                <td>@account.TurnoverDebit</td>
+                <td>@account.TurnoverCredit</td>
+                <td>@account.OutgoingBalanceActive</td>
+                <td>@account.OutgoingBalancePassive</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-primary">Back to Home</a>
