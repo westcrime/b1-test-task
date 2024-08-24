@@ -16,10 +16,10 @@ File - CalculateSumAndMedian.sql
 ![1.1](https://github.com/westcrime/b1-test-task/blob/master/Task1/screens/task4.png)
 
 # Task2
-1. Создание таблиц находится в папке SqlScripts
-2. a + c)
+# 1 Создание таблиц находится в папке SqlScripts
+# 2 a + c)
 ![1.1](https://github.com/westcrime/b1-test-task/blob/master/Task2/screens/task2_1_3.png)
-2. b)
+# 2 b)
 ![1.1](https://github.com/westcrime/b1-test-task/blob/master/Task2/screens/task2_2.png)
-3. Слева показан скачанный файл
+# 3 Слева показан скачанный файл
 ![1.1](https://github.com/westcrime/b1-test-task/blob/master/Task2/screens/task3.png)
