@@ -1,26 +1,36 @@
-@model IEnumerable<Task2.Models.Account>
+@model Task2.Models.AccountViewModel;
 
 @{
     ViewData["Title"] = "View File";
 }
 
-<h2>Accounts Data</h2>
+<h2>Данные таблицы</h2>
+
+<a href="/ExportFile/ExportToExcel?fileId=@Model.UploadedFileId" class="btn btn-success">Скачать Excel</a>
+<a asp-action="Index" class="btn btn-primary">Обратно на главную</a>
 
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Account Number</th>
-            <th>Class</th>
-            <th>Incoming Balance Active</th>
-            <th>Incoming Balance Passive</th>
-            <th>Turnover Debit</th>
-            <th>Turnover Credit</th>
-            <th>Outgoing Balance Active</th>
-            <th>Outgoing Balance Passive</th>
+            <th rowspan="1" style="border-right: 1px solid black; text-align: center;">Б/сч</th>
+            <th rowspan="1" style="border-right: 1px solid black; text-align: center;">Класс</th>
+            <th colspan="2" style="border-right: 1px solid black; text-align: center;">ВХОДЯЩЕЕ САЛЬДО</th>
+            <th colspan="2" style="border-right: 1px solid black; text-align: center;">ОБОРОТЫ</th>
+            <th colspan="2" style="text-align: center;">ИСХОДЯЩЕЕ САЛЬДО</th>
+        </tr>
+        <tr>
+            <th style="border-right: 1px solid black;"></th>
+            <th style="border-right: 1px solid black;"></th>
+            <th style="border-right: 1px solid black; text-align: center;">Актив</th>
+            <th style="border-right: 1px solid black; text-align: center;">Пассив</th>
+            <th style="border-right: 1px solid black; text-align: center;">Дебет</th>
+            <th style="border-right: 1px solid black; text-align: center;">Кредит</th>
+            <th style="border-right: 1px solid black; text-align: center;">Актив</th>
+            <th style="text-align: center;">Пассив</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var account in Model)
+        @foreach (var account in Model.Accounts)
         {
             <tr>
                 <td>@account.AccountNumber</td>
@@ -35,5 +45,3 @@
         }
     </tbody>
 </table>
-
-<a asp-action="Index" class="btn btn-primary">Back to Home</a>

@@ -9,20 +9,14 @@ namespace Task2.Controllers
     public class FileUploadController : Controller
     {
         private readonly ILogger<FileUploadController> _logger;
-        private readonly IAccountService _accountService;
+        private readonly IDatabaseService _databaseService;
 
-        public FileUploadController(ILogger<FileUploadController> logger, IAccountService accountService)
+        public FileUploadController(ILogger<FileUploadController> logger, IDatabaseService databaseService)
         {
-            _accountService = accountService;
+            _databaseService = databaseService;
             _logger = logger;
         }
-
-        // Отображение списка загруженных файлов
-        public async Task<IActionResult> Index()
-        {
-            return View();
-        }
-
+        
         // Загрузка файла
         [HttpPost]
         public async Task<IActionResult> UploadFile(IFormFile file)
@@ -52,7 +46,7 @@ namespace Task2.Controllers
                     UploadDate = DateTime.Now,
                 };
 
-                var responseFromFilesDb = await _accountService.CreateUploadedFile(uploadedFile);
+                var responseFromFilesDb = await _databaseService.CreateUploadedFile(uploadedFile);
                 if (responseFromFilesDb?.Success == false)
                 {
                     _logger.LogError(responseFromFilesDb.ErrorMessage);
@@ -91,7 +85,7 @@ namespace Task2.Controllers
                         _logger.Log(LogLevel.Critical, $"<-------{accountData.AccountNumber}, {accountData.Class}, {accountData.IncomingBalanceActive}, {accountData.IncomingBalancePassive}, " + 
                         $"{accountData.TurnoverDebit}, {accountData.TurnoverCredit}, {accountData.OutgoingBalanceActive}, {accountData.OutgoingBalancePassive}, {accountData.UploadedFileId}------->");
 
-                        var response = await _accountService.CreateAccountAsync(accountData);
+                        var response = await _databaseService.CreateAccountAsync(accountData);
                         if (response?.Success == false)
                         {
                             _logger.LogError(response.ErrorMessage);

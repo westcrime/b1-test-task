@@ -4,15 +4,15 @@
     ViewData["Title"] = "Uploaded Files";
 }
 
-<h1>Uploaded Files</h1>
+<h1>Загруженные файлы</h1>
 
 @if (Model != null && Model.Any())
 {
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>File Name</th>
-                <th>Upload Date</th>
+                <th>Имя файла</th>
+                <th>Дата загрузки</th>
             </tr>
         </thead>
         <tbody>
@@ -29,15 +29,15 @@
 }
 else
 {
-    <p>No files have been uploaded yet.</p>
+    <p>Еще не было загружено никаких файлов.</p>
 }
 
 <hr />
 
-<h2>Upload a New File</h2>
+<h2>Загрузить новый файл</h2>
 <form asp-action="UploadFile" method="post" enctype="multipart/form-data">
     <div class="form-group">
-        <label for="file">Choose file to upload</label>
+        <label for="file">Выберите файл .xlsx</label>
         <input type="file" class="form-control" name="file" id="file" />
     </div>
     <button type="submit" class="btn btn-primary mt-2">Upload</button>

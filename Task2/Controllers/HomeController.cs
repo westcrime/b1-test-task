@@ -8,11 +8,11 @@ namespace Task2.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IAccountService _accountService;
+        private readonly IDatabaseService _databaseService;
 
-        public HomeController(ILogger<HomeController> logger, IAccountService accountService)
+        public HomeController(ILogger<HomeController> logger, IDatabaseService databaseService)
         {
-            _accountService = accountService;
+            _databaseService = databaseService;
             _logger = logger;
         }
 
@@ -21,7 +21,8 @@ namespace Task2.Controllers
         {
             try
             {
-                var response = await _accountService.GetUploadedFilesListAsync();
+                // Загрузка списков загруженных файлов
+                var response = await _databaseService.GetUploadedFilesListAsync();
                 if (response.Success == false)
                 {
                     _logger.LogError(response.ErrorMessage);
@@ -44,14 +45,19 @@ namespace Task2.Controllers
             try
             {
                 // Получение данных из файла по ID
-                var response = await _accountService.GetAccountsFromFileAsync(id);
+                var response = await _databaseService.GetAccountsFromFileAsync(id);
                 if (response.Success == false)
                 {
                     // Логирование ошибки и отображение страницы с ошибкой
                     _logger.LogError(response.ErrorMessage);
                     return View("Error");
                 }
-                return View(response.Data);
+                var accountViewModel = new AccountViewModel()
+                {
+                    UploadedFileId = id,
+                    Accounts = response.Data
+                };
+                return View(accountViewModel);
             }
             catch (Exception ex)
             {

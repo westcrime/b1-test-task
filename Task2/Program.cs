@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // Регистрация сервиса для crud операций с аккаунтами
-builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IDatabaseService, DatabaseService>();
 
 // Регистрация ApplicationDbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

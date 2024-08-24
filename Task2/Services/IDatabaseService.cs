@@ -2,7 +2,7 @@ using Task2.Models;
 
 namespace Task2.Services
 {
-    public interface IAccountService
+    public interface IDatabaseService
     {
         /// <summary>
         /// Получение списка всех объектов
